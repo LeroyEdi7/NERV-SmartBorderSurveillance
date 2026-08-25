@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "model_name": "insightface/buffalo_l",
+  "embedding_dimension": 0,
+  "privacy_note": "Example only. Use enroll_watchlist.py with explicit consent/authority.",
+  "entries": []
+}

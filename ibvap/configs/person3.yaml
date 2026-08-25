@@ -1,0 +1,47 @@
+face:
+  model_pack: buffalo_l
+  model_root: models/insightface
+  providers:
+    - CPUExecutionProvider
+  detection_size: [640, 640]
+  min_detection_score: 0.65
+  min_face_pixels: 64
+  min_brightness: 35
+  max_brightness: 225
+  min_sharpness: 35
+  max_clipped_ratio: 0.45
+  possible_threshold: 0.40
+  match_threshold: 0.50
+  ambiguity_margin: 0.04
+  consensus_window: 7
+  min_supporting_frames: 3
+  min_support_ratio: 0.60
+  sample_every_n_frames: 3
+  event_cooldown_seconds: 15
+
+anpr:
+  detector_model: yolo-v9-s-608-license-plate-end2end
+  ocr_model: cct-s-v2-global-model
+  providers:
+    - CPUExecutionProvider
+  detector_confidence: 0.40
+  min_plate_height: 18
+  min_plate_width: 55
+  min_brightness: 25
+  max_brightness: 235
+  min_sharpness: 25
+  max_clipped_ratio: 0.55
+  consensus_window: 8
+  min_supporting_frames: 3
+  min_character_agreement: 0.58
+  min_verified_agreement: 0.72
+  sample_every_n_frames: 3
+  event_cooldown_seconds: 15
+
+evidence:
+  directory: demo/evidence
+  event_log: demo/events/person3-events.jsonl
+  hash_algorithm: sha256
+  require_human_verification: true
+
+watchlist_path: demo/watchlist/watchlist.json

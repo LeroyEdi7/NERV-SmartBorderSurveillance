@@ -1,0 +1,10 @@
+{
+  "plates": [
+    {"truth": "MH12AB1234", "prediction": "MH12AB1234"},
+    {"truth": "DL01CZ4321", "prediction": "DL01CZ4321"}
+  ],
+  "faces": [
+    {"truth_id": "WL-DEMO-001", "predicted_id": "WL-DEMO-001"},
+    {"truth_id": null, "predicted_id": null}
+  ]
+}

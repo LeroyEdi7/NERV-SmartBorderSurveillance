@@ -1,0 +1,24 @@
+{
+  "face": {
+    "adapter": "InsightFace FaceAnalysis",
+    "model_pack": "buffalo_l",
+    "ready_made": true,
+    "training_required_for_mvp": false,
+    "download_behavior": "Downloaded by InsightFace on first use",
+    "license_warning": "InsightFace pretrained models are for non-commercial research use unless separately licensed."
+  },
+  "anpr": {
+    "adapter": "FastALPR",
+    "detector_model": "yolo-v9-s-608-license-plate-end2end",
+    "ocr_model": "cct-s-v2-global-model",
+    "ready_made": true,
+    "training_required_for_mvp": false,
+    "download_behavior": "Downloaded by FastALPR on first use",
+    "framework_license": "MIT; separately review downloaded detector/OCR artifact terms for production"
+  },
+  "post_processing": {
+    "face_consensus": "Repository implementation; no training",
+    "plate_character_consensus": "Repository implementation; no training",
+    "evidence_passport": "Repository implementation; no training"
+  }
+}

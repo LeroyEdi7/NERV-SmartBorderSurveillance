@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ibvap-person3"
+version = "0.1.0"
+description = "Face, ANPR, and evidence-fusion module for the IBVAP hackathon MVP"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+  "numpy>=1.26,<3",
+  "Pillow>=10,<13",
+  "PyYAML>=6,<7",
+]
+
+[project.optional-dependencies]
+models = [
+  "opencv-python-headless>=4.9,<5",
+  "onnxruntime>=1.18,<2",
+  "insightface>=1.0,<2",
+  "fast-alpr[onnx]>=0.3,<1",
+]
+test = [
+  "pytest>=8,<10",
+  "pytest-cov>=5,<8",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ai*"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["ai"]
+branch = true
