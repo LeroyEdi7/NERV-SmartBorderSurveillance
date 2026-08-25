@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nerv.local/schemas/backend-event-v1.json",
+  "title": "NERV AI Detection Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "event_type",
+    "timestamp",
+    "camera_id",
+    "entity",
+    "detection",
+    "severity",
+    "metadata"
+  ],
+  "properties": {
+    "event_id": {"type": "string", "pattern": "^EVT-", "minLength": 5},
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "person_detected",
+        "vehicle_detected",
+        "intrusion",
+        "watchlist_match",
+        "plate_detected",
+        "vehicle_person_association",
+        "cross_camera_match",
+        "hostile_activity",
+        "suspicious_activity"
+      ]
+    },
+    "timestamp": {"type": "string", "format": "date-time"},
+    "camera_id": {"type": "string", "minLength": 1},
+    "entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entity_id", "entity_type"],
+      "properties": {
+        "entity_id": {"type": "string", "minLength": 1},
+        "entity_type": {"type": "string", "minLength": 1}
+      }
+    },
+    "detection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["class", "confidence", "bbox", "track_id"],
+      "properties": {
+        "class": {"type": "string", "minLength": 1},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "bbox": {
+          "type": "array",
+          "items": {"type": "number"},
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "track_id": {"type": "integer", "minimum": 0}
+      }
+    },
+    "severity": {"type": "string", "enum": ["LOW", "MEDIUM", "HIGH"]},
+    "metadata": {"type": "object"}
+  }
+}

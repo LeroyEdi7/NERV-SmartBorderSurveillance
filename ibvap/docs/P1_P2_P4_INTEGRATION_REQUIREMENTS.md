@@ -198,32 +198,37 @@ P3 returns `CommonEvent` objects. The JSON representation is produced through
 
 ```json
 {
-  "event_id": "uuid",
-  "event_type": "VEHICLE_IDENTITY_RESOLVED",
-  "timestamp": "2026-08-25T12:00:00+00:00",
+  "event_id": "EVT-9FBE6354A1604DB795B279F1D50C62B3",
+  "event_type": "plate_detected",
+  "timestamp": "2026-08-25T12:00:00Z",
   "camera_id": "CAM-GATE-A",
   "entity": {
     "entity_id": "VEHICLE-007",
     "entity_type": "vehicle"
   },
-  "severity": "medium",
-  "confidence": 0.93,
-  "evidence": {
-    "plate_consensus": {}
+  "detection": {
+    "class": "vehicle",
+    "confidence": 0.93,
+    "bbox": [40, 60, 600, 330],
+    "track_id": 91
   },
-  "status": "PENDING_HUMAN_REVIEW",
+  "severity": "MEDIUM",
   "metadata": {
-    "producer": "person3-anpr"
+    "producer": "person3-anpr",
+    "review_status": "PENDING_HUMAN_REVIEW",
+    "evidence": {"plate_consensus": {}}
   }
 }
 ```
 
 Current event types:
 
-- `WATCHLIST_MATCH_CANDIDATE`
-- `VEHICLE_IDENTITY_RESOLVED`
+- `watchlist_match`
+- `plate_detected`
 
 These are review candidates, not automatic final identity claims.
+The complete cross-team enum and JSON Schema are in `docs/BACKEND_EVENT_FORMAT.md`
+and `configs/backend_event_schema.json`.
 
 ### P4 must implement
 
@@ -279,8 +284,8 @@ Event storage:
 - `event_id` unique primary identifier.
 - `event_type`, timestamp, camera ID.
 - Entity ID/type.
-- Severity, confidence, status.
-- Evidence JSON and metadata JSON.
+- Detection JSON and uppercase severity.
+- Metadata JSON, including evidence and review status.
 - Created/updated timestamps.
 
 Passport storage:
@@ -311,7 +316,7 @@ The final team test should demonstrate:
 3. P3 collects multiple usable plate observations.
 4. The vehicle appears in Camera B as local track 12 with the same global ID.
 5. P3 fuses both tracks, resolves OCR disagreement, and creates an Evidence Passport.
-6. P3 emits one deduplicated `VEHICLE_IDENTITY_RESOLVED` event.
+6. P3 emits one deduplicated `plate_detected` event.
 7. P4 persists and streams the event to P5.
 8. P5 displays raw candidates, provenance, rejected evidence, and pending-review state.
 9. An operator verifies or dismisses the candidate.

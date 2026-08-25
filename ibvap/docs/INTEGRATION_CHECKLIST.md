@@ -17,8 +17,9 @@
 ## Person 4 handoff
 
 - Consume `CommonEvent.to_dict()` or tail the configured JSONL sink.
+- Validate against `configs/backend_event_schema.json`.
 - Deduplicate on `event_id`; Person 3 already suppresses repeated inference alerts.
-- Persist `status=PENDING_HUMAN_REVIEW` until an operator decides.
+- Persist `metadata.review_status=PENDING_HUMAN_REVIEW` until an operator decides.
 - Expose Evidence Passport character provenance and integrity state in the UI.
 - Do not expose biometric embeddings through the frontend/API.
 

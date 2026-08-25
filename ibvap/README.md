@@ -162,18 +162,30 @@ producer when their modules are ready.
 
 ```json
 {
-  "event_id": "uuid",
-  "event_type": "VEHICLE_IDENTITY_RESOLVED",
-  "timestamp": "ISO-8601",
+  "event_id": "EVT-9FBE6354A1604DB795B279F1D50C62B3",
+  "event_type": "plate_detected",
+  "timestamp": "2026-08-25T16:30:00Z",
   "camera_id": "CAM-GATE-A",
   "entity": {"entity_id": "VEHICLE-007", "entity_type": "vehicle"},
-  "severity": "medium",
-  "confidence": 0.93,
-  "evidence": {"plate_consensus": {}},
-  "status": "PENDING_HUMAN_REVIEW",
-  "metadata": {"producer": "person3-anpr"}
+  "detection": {
+    "class": "vehicle",
+    "confidence": 0.93,
+    "bbox": [40, 60, 600, 330],
+    "track_id": 91
+  },
+  "severity": "MEDIUM",
+  "metadata": {
+    "producer": "person3-anpr",
+    "review_status": "PENDING_HUMAN_REVIEW",
+    "plate_text": "MH12AB1234",
+    "evidence": {"plate_consensus": {}}
+  }
 }
 ```
+
+The exact shared P1/P2/P3 contract is documented in
+[`docs/BACKEND_EVENT_FORMAT.md`](docs/BACKEND_EVENT_FORMAT.md) and enforced by
+[`configs/backend_event_schema.json`](configs/backend_event_schema.json).
 
 P4 can replace `JsonlEventSink.publish()` with HTTP, Kafka, Redis Streams, or its
 database adapter without changing face/ANPR code.

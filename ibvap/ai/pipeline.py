@@ -35,7 +35,12 @@ class Person3Pipeline:
             face_output = self.face_service.process(observation)
             if face_output.track and face_output.track.event_ready:
                 events.append(
-                    face_event(face_output.track, observation.timestamp, observation.global_entity_id)
+                    face_event(
+                        face_output.track,
+                        observation.timestamp,
+                        observation.bbox,
+                        observation.global_entity_id,
+                    )
                 )
             self._publish(events)
             return Person3Output(face=face_output, events=tuple(events))
@@ -43,7 +48,14 @@ class Person3Pipeline:
             anpr_output = self.anpr_service.process(observation)
             if anpr_output.track and anpr_output.track.event_ready:
                 events.append(
-                    plate_event(anpr_output.track, observation.timestamp, observation.global_entity_id)
+                    plate_event(
+                        anpr_output.track,
+                        observation.timestamp,
+                        observation.camera_id,
+                        observation.bbox,
+                        observation.track_id,
+                        observation.global_entity_id,
+                    )
                 )
             self._publish(events)
             return Person3Output(anpr=anpr_output, events=tuple(events))

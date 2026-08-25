@@ -34,6 +34,22 @@ class QualityState(StrEnum):
     UNUSABLE = "UNUSABLE"
 
 
+EVENT_TYPES = frozenset(
+    {
+        "person_detected",
+        "vehicle_detected",
+        "intrusion",
+        "watchlist_match",
+        "plate_detected",
+        "vehicle_person_association",
+        "cross_camera_match",
+        "hostile_activity",
+        "suspicious_activity",
+    }
+)
+SEVERITIES = frozenset({"LOW", "MEDIUM", "HIGH"})
+
+
 @dataclass(frozen=True, slots=True)
 class BoundingBox:
     x1: float
@@ -269,29 +285,67 @@ class PlateTrackResult:
 
 
 @dataclass(frozen=True, slots=True)
+class EventDetection:
+    """Detection block required by the shared P1/P2/P3-to-P4 event schema."""
+
+    class_name: str
+    confidence: float
+    bbox: BoundingBox
+    track_id: int
+
+    def __post_init__(self) -> None:
+        if not self.class_name:
+            raise ValueError("detection class is required")
+        if not 0.0 <= self.confidence <= 1.0:
+            raise ValueError("detection confidence must be between 0 and 1")
+        if self.track_id < 0:
+            raise ValueError("detection track_id must be non-negative")
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "class": self.class_name,
+            "confidence": self.confidence,
+            "bbox": self.bbox.as_list(),
+            "track_id": self.track_id,
+        }
+
+
+@dataclass(frozen=True, slots=True)
 class CommonEvent:
+    """Strict shared event envelope consumed by the Person 4 backend."""
+
     event_id: str
     event_type: str
     timestamp: datetime
     camera_id: str
     entity_id: str
     entity_type: str
+    detection: EventDetection
     severity: str
-    status: str
-    confidence: float | None
-    evidence: dict[str, Any]
-    metadata: dict[str, Any]
+    metadata: dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        if not self.event_id.startswith("EVT-"):
+            raise ValueError("event_id must start with EVT-")
+        if self.event_type not in EVENT_TYPES:
+            raise ValueError(f"Unsupported event_type: {self.event_type}")
+        if self.severity not in SEVERITIES:
+            raise ValueError(f"Unsupported severity: {self.severity}")
+        if not self.camera_id or not self.entity_id or not self.entity_type:
+            raise ValueError("camera_id and entity identifiers are required")
 
     def to_dict(self) -> dict[str, Any]:
+        timestamp = self.timestamp
+        if timestamp.tzinfo is None:
+            timestamp = timestamp.replace(tzinfo=timezone.utc)
+        timestamp_utc = timestamp.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
         return {
             "event_id": self.event_id,
             "event_type": self.event_type,
-            "timestamp": self.timestamp.isoformat(),
+            "timestamp": timestamp_utc,
             "camera_id": self.camera_id,
             "entity": {"entity_id": self.entity_id, "entity_type": self.entity_type},
+            "detection": self.detection.to_dict(),
             "severity": self.severity,
-            "confidence": self.confidence,
-            "evidence": self.evidence,
-            "status": self.status,
             "metadata": self.metadata,
         }

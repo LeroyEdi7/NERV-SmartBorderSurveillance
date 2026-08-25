@@ -215,14 +215,16 @@ should persist and expose these events through the backend.
 
 Important output fields:
 
-- Unique `event_id`.
-- `event_type` such as `VEHICLE_IDENTITY_RESOLVED`.
+- Unique `EVT-`-prefixed `event_id`.
+- Approved `event_type`: `watchlist_match` or `plate_detected` for P3.
 - Timestamp and camera ID.
 - Local/global entity identity.
-- Candidate confidence and severity.
-- Accepted/rejected evidence and provenance.
-- `PENDING_HUMAN_REVIEW` status.
+- Detection class, confidence, full-frame box, and local track ID.
+- Uppercase severity (`LOW`, `MEDIUM`, or `HIGH`).
+- Accepted/rejected evidence, provenance, and `PENDING_HUMAN_REVIEW` inside `metadata`.
 - Evidence Passport integrity state.
+
+See `docs/BACKEND_EVENT_FORMAT.md` for the shared P1/P2/P3-to-P4 contract.
 
 Person 4 must not expose biometric embeddings through frontend APIs.
 
