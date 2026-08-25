@@ -4,6 +4,10 @@ Team handoff: read [`docs/PERSON3_IMPLEMENTATION.md`](docs/PERSON3_IMPLEMENTATIO
 for the exact implemented scope, file map, model list, P1/P2/P4 contracts, verification
 commands, limitations, and integration checklist.
 
+P1, P2, and P4 should use
+[`docs/P1_P2_P4_INTEGRATION_REQUIREMENTS.md`](docs/P1_P2_P4_INTEGRATION_REQUIREMENTS.md)
+as their implementation and acceptance checklist for connecting to Person 3.
+
 This is the complete Person 3 module from the IBVAP MVP specification. It accepts
 tracked person/vehicle observations, runs face-watchlist or license-plate analysis,
 rejects weak images, fuses evidence over time and cameras, and emits Person 4's

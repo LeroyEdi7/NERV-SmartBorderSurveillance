@@ -2,6 +2,9 @@
 
 ## Status
 
+Team integration requirements for P1, P2, and P4 are maintained separately in
+[`P1_P2_P4_INTEGRATION_REQUIREMENTS.md`](P1_P2_P4_INTEGRATION_REQUIREMENTS.md).
+
 Person 3's standalone module is implemented and tested. It can run with mock/manual
 track observations today. Final end-to-end operation requires live detection boxes
 from Person 1, persistent/cross-camera identities from Person 2, and event storage/API
