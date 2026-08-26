@@ -1,6 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException
+from typing import Optional
+
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from sqlalchemy.exc import IntegrityError
 
 from backend.database import get_db
 from backend.models.event import Event
@@ -15,6 +16,10 @@ router = APIRouter(
     tags=["Events"]
 )
 
+
+# ============================================================
+# POST /api/v1/events
+# ============================================================
 
 @router.post(
     "",
@@ -115,3 +120,101 @@ def create_event(
         )
 
     return event
+
+
+# ============================================================
+# GET /api/v1/events
+# ============================================================
+
+@router.get(
+    "",
+    response_model=list[EventResponse]
+)
+def get_events(
+    camera_id: Optional[str] = Query(
+        default=None,
+        description="Filter events by camera ID"
+    ),
+
+    event_type: Optional[str] = Query(
+        default=None,
+        description="Filter events by event type"
+    ),
+
+    severity: Optional[str] = Query(
+        default=None,
+        description="Filter events by severity"
+    ),
+
+    status: Optional[str] = Query(
+        default=None,
+        description="Filter events by status"
+    ),
+
+    limit: int = Query(
+        default=50,
+        ge=1,
+        le=200,
+        description="Maximum number of events to return"
+    ),
+
+    offset: int = Query(
+        default=0,
+        ge=0,
+        description="Number of events to skip"
+    ),
+
+    db: Session = Depends(get_db)
+):
+    """
+    Retrieve surveillance events.
+
+    Events are returned newest first.
+    """
+
+    query = db.query(Event)
+
+    # --------------------------------------------------------
+    # Filters
+    # --------------------------------------------------------
+
+    if camera_id:
+        query = query.filter(
+            Event.camera_id == camera_id
+        )
+
+    if event_type:
+        query = query.filter(
+            Event.event_type == event_type
+        )
+
+    if severity:
+        query = query.filter(
+            Event.severity == severity
+        )
+
+    if status:
+        query = query.filter(
+            Event.status == status
+        )
+
+    # --------------------------------------------------------
+    # Sort newest events first
+    # --------------------------------------------------------
+
+    query = query.order_by(
+        Event.timestamp.desc()
+    )
+
+    # --------------------------------------------------------
+    # Pagination
+    # --------------------------------------------------------
+
+    events = (
+        query
+        .offset(offset)
+        .limit(limit)
+        .all()
+    )
+
+    return events
