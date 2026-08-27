@@ -10,6 +10,8 @@ from backend.models.entity import Entity
 from backend.models.zone import Zone
 from backend.schemas.event import EventCreate, EventResponse
 
+from backend.websocket_manager import manager
+
 
 router = APIRouter(
     prefix="/api/v1/events",
@@ -26,7 +28,7 @@ router = APIRouter(
     response_model=EventResponse,
     status_code=201
 )
-def create_event(
+async def create_event(
     event_data: EventCreate,
     db: Session = Depends(get_db)
 ):
@@ -111,13 +113,27 @@ def create_event(
         db.commit()
         db.refresh(event)
 
-    except IntegrityError as e:
+    except Exception:
         db.rollback()
+        raise
 
-        raise HTTPException(
-            status_code=400,
-            detail="Event violates a database constraint."
-        )
+
+    await manager.broadcast({
+        "type": "NEW_EVENT",
+        "event": {
+            "event_id": event.event_id,
+            "event_type": event.event_type,
+            "camera_id": event.camera_id,
+            "entity_id": event.entity_id,
+            "severity": event.severity,
+            "confidence": event.confidence,
+            "zone_id": event.zone_id,
+            "timestamp": event.timestamp.isoformat(),
+            "status": event.status,
+            "snapshot_path": event.snapshot_path,
+            "metadata": event.extra_data
+        }
+    })
 
     return event
 

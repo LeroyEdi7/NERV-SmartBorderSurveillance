@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>IBVAP WebSocket Test</title>
+</head>
+
+<body>
+
+    <h1>IBVAP WebSocket Test</h1>
+
+    <p id="status">Connecting...</p>
+
+    <pre id="events"></pre>
+
+    <script>
+
+        const status = document.getElementById("status");
+        const events = document.getElementById("events");
+
+        const socket = new WebSocket(
+            "ws://127.0.0.1:8000/ws/events"
+        );
+
+        socket.onopen = function () {
+
+            status.textContent = "CONNECTED";
+
+            console.log("WebSocket connected");
+
+        };
+
+        socket.onmessage = function (event) {
+
+            console.log("Received:", event.data);
+
+            const data = JSON.parse(event.data);
+
+            events.textContent =
+                JSON.stringify(data, null, 2);
+
+        };
+
+        socket.onclose = function () {
+
+            status.textContent = "DISCONNECTED";
+
+        };
+
+        socket.onerror = function (error) {
+
+            console.error("WebSocket error:", error);
+
+        };
+
+    </script>
+
+</body>
+
+</html>

@@ -1,8 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 
 from backend.api.events import router as events_router
+from backend.api import websocket
 from backend.database import engine
 from backend import models
+
+from backend.websocket_manager import manager
 
 
 app = FastAPI(
@@ -14,6 +17,7 @@ app = FastAPI(
 
 # Register API routers
 app.include_router(events_router)
+app.include_router(websocket.router)
 
 
 @app.get("/")
@@ -39,3 +43,17 @@ def health():
             "database": "disconnected",
             "message": str(e)
         }
+
+
+@app.websocket("/ws/events")
+async def websocket_events(websocket: WebSocket):
+
+    await manager.connect(websocket)
+
+    try:
+        while True:
+            # Keep the connection alive
+            await websocket.receive_text()
+
+    except WebSocketDisconnect:
+        manager.disconnect(websocket)
