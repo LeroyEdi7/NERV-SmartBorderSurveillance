@@ -1,0 +1,143 @@
+/* ── TacticalMap ─────────────────────────────────────────────────────────── */
+
+.tmap {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 10px 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle teal corner glow */
+.tmap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 0% 0%, rgba(52, 217, 180, 0.04) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+/* ── Header ── */
+.tmap__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-mid);
+  flex-shrink: 0;
+}
+
+.tmap__title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-hi);
+  font-weight: 600;
+}
+
+.tmap__title svg {
+  color: var(--signal-teal);
+  flex-shrink: 0;
+}
+
+.tmap__status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: var(--signal-teal);
+  letter-spacing: 0.06em;
+}
+
+.tmap__live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--signal-teal);
+  animation: tmap-blink 1.4s ease-in-out infinite;
+}
+
+@keyframes tmap-blink {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--signal-teal); }
+  50%       { opacity: 0.35; box-shadow: none; }
+}
+
+/* ── SVG frame ── */
+.tmap__frame {
+  flex: 1;
+  min-height: 0;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+  background: #0a0d0f;
+  position: relative;
+}
+
+.tmap__svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ── Grid lines ── */
+.tmap__grid line {
+  stroke: #162028;
+  stroke-width: 0.5;
+}
+
+/* ── Legend ── */
+.tmap__legend {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--text-dim);
+  flex-shrink: 0;
+  padding-top: 2px;
+  border-top: 1px solid var(--line);
+}
+
+.tmap__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.3s ease;
+}
+
+.tmap__legend-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.tmap__legend-dash {
+  width: 14px;
+  height: 1.5px;
+  border-radius: 1px;
+  flex-shrink: 0;
+  opacity: 0.65;
+  background-image: repeating-linear-gradient(
+    to right,
+    currentColor 0px,
+    currentColor 3px,
+    transparent 3px,
+    transparent 6px
+  );
+}
+
+.tmap__legend-g017 {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: color 0.3s ease;
+}

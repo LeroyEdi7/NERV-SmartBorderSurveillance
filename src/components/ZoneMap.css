@@ -1,0 +1,75 @@
+.zone-map {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+}
+
+.zone-map__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-mid);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.zone-map__legend {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
+  color: var(--text-dim);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.zone-map__legend i {
+  width: 8px;
+  height: 8px;
+  border-radius: 1px;
+  display: inline-block;
+}
+
+.zone-map__frame {
+  flex: 1;
+  min-height: 180px;
+  border-radius: 2px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.zone-map__marker-wrap {
+  background: transparent;
+  border: none;
+}
+
+.zone-map__marker {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 25%, transparent),
+    0 0 10px color-mix(in srgb, var(--c) 60%, transparent);
+}
+
+.leaflet-tooltip {
+  background: var(--panel-raised);
+  color: var(--text-hi);
+  border: 1px solid var(--line-strong);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  border-radius: 2px;
+  box-shadow: none;
+}
+
+.leaflet-tooltip-top:before {
+  border-top-color: var(--line-strong);
+}

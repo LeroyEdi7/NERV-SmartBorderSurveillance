@@ -1,0 +1,198 @@
+/* ── StatusBar ───────────────────────────────────────────────────────────── */
+
+.status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+  gap: 16px;
+}
+
+/* ── Brand ── */
+.status-bar__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-bar__mark {
+  width: 9px;
+  height: 9px;
+  background: var(--signal-teal);
+  border-radius: 1px;
+  transform: rotate(45deg);
+  box-shadow: 0 0 8px rgba(52, 217, 180, 0.6);
+  flex-shrink: 0;
+}
+
+.status-bar__title {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text-hi);
+  letter-spacing: 0.01em;
+}
+
+.status-bar__nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 12px;
+  background: var(--void);
+  border: 1px solid var(--line);
+  padding: 2px;
+  border-radius: 4px;
+}
+
+.status-bar__nav-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-mid);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: all 0.15s ease;
+}
+
+.status-bar__nav-btn:hover {
+  color: var(--text-hi);
+}
+
+.status-bar__nav-btn--active {
+  background: var(--panel-raised);
+  color: var(--signal-teal);
+  border: 1px solid var(--line-strong);
+}
+
+/* ── Center cluster ── */
+.status-bar__center {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-family: var(--font-mono);
+}
+
+.status-bar__online-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--signal-teal);
+  background: rgba(52, 217, 180, 0.1);
+  border: 1px solid rgba(52, 217, 180, 0.3);
+  border-radius: 20px;
+  padding: 3px 10px;
+  letter-spacing: 0.04em;
+}
+
+.status-bar__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-bar__dot--live {
+  background: var(--signal-teal);
+  box-shadow: 0 0 6px rgba(52, 217, 180, 0.8);
+  animation: sb-dot-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes sb-dot-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+.status-bar__clock {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-hi);
+  letter-spacing: 0.04em;
+  min-width: 68px;
+  text-align: center;
+}
+
+.status-bar__date {
+  font-size: 12px;
+  color: var(--text-mid);
+  letter-spacing: 0.03em;
+}
+
+/* ── Right controls ── */
+.status-bar__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-bar__icon-btn {
+  background: var(--panel-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--text-mid);
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.status-bar__icon-btn:hover {
+  background: var(--line);
+  border-color: var(--line-strong);
+}
+
+.status-bar__operator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--panel-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  padding: 4px 10px 4px 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.status-bar__operator:hover { background: var(--line); }
+
+.status-bar__avatar {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.status-bar__operator-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.status-bar__operator-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-hi);
+  line-height: 1.2;
+}
+
+.status-bar__operator-role {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+}
+
+.status-bar__chevron {
+  font-size: 11px;
+  color: var(--text-dim);
+}

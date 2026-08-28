@@ -1,0 +1,135 @@
+/* ── GlobalTrack ─────────────────────────────────────────────────────────── */
+
+.gtrack {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 10px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ── View All Header Link ── */
+.gtrack__view-all-btn {
+  background: transparent;
+  border: none;
+  color: var(--signal-teal);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  opacity: 0.9;
+  transition: opacity 0.15s ease;
+}
+
+.gtrack__view-all-btn:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* ── Compact Track List ── */
+.gtrack__list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+  padding-right: 2px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+.gtrack__list::-webkit-scrollbar { width: 3px; }
+.gtrack__list::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 2px; }
+
+.gtrack__item {
+  background: var(--panel-raised);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--track-accent, var(--signal-teal));
+  border-radius: 4px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+
+.gtrack__item:hover {
+  background: color-mix(in srgb, var(--track-accent) 6%, var(--panel-raised));
+  border-color: var(--line-strong);
+  transform: translateX(2px);
+}
+
+.gtrack__item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.gtrack__item-id-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gtrack__item-id {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-hi);
+  letter-spacing: 0.02em;
+}
+
+.gtrack__item-conf {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--signal-teal);
+}
+
+.gtrack__item-detection {
+  font-size: 11.5px;
+  color: var(--text-mid);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gtrack__item-det-label {
+  color: var(--text-hi);
+  font-weight: 500;
+}
+
+.gtrack__item-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--text-dim);
+  flex-wrap: wrap;
+}
+
+.gtrack__item-cam {
+  color: var(--text-mid);
+}
+
+.gtrack__item-sep {
+  opacity: 0.4;
+}
+
+.gtrack__item-time {
+  color: var(--text-dim);
+}
+
+.gtrack__item-veh {
+  color: var(--signal-blue);
+  font-weight: 600;
+}

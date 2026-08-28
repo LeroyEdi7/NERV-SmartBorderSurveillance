@@ -1,0 +1,97 @@
+.timeline {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 12px 18px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.timeline__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-mid);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.timeline__entity {
+  color: var(--signal-teal);
+  background: var(--signal-teal-dim);
+  padding: 1px 8px;
+  border-radius: 8px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.timeline__track {
+  position: relative;
+  height: 6px;
+  margin: 0 6px;
+}
+
+.timeline__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1.5px;
+  background: var(--line-strong);
+  transform: translateY(-50%);
+}
+
+.timeline__node {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timeline__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--line-strong);
+  border: 1.5px solid var(--void);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timeline__node.is-reached .timeline__dot {
+  background: var(--accent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+.timeline__tag {
+  position: absolute;
+  top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  white-space: nowrap;
+  color: var(--text-dim);
+  opacity: 0.55;
+  transition: opacity 0.3s ease, color 0.3s ease;
+}
+
+.timeline__node.is-reached .timeline__tag {
+  opacity: 1;
+  color: var(--text-mid);
+}
+
+.timeline__tag-time {
+  color: var(--text-hi);
+  font-weight: 500;
+}
+
+.timeline__tag-cam {
+  color: var(--text-dim);
+}

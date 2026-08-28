@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --void: #0a0d0f;
+  --panel: #10161a;
+  --panel-raised: #161f24;
+  --line: #223038;
+  --line-strong: #33454f;
+
+  --text-hi: #dfe9eb;
+  --text-mid: #8fa3aa;
+  --text-dim: #52666d;
+
+  --signal-red: #e14b3c;
+  --signal-red-dim: #4a2420;
+  --signal-amber: #e8a13d;
+  --signal-amber-dim: #4a3820;
+  --signal-teal: #34d9b4;
+  --signal-teal-dim: #163530;
+  --signal-blue: #4e9fe8;
+  --signal-blue-dim: #1c3448;
+
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-sans: 'Inter', sans-serif;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--void);
+  background-image:
+    radial-gradient(circle at 15% 10%, rgba(52, 217, 180, 0.035), transparent 40%),
+    radial-gradient(circle at 85% 90%, rgba(78, 159, 232, 0.03), transparent 45%);
+  color: var(--text-hi);
+  font-family: var(--font-sans);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+::selection {
+  background: var(--signal-teal-dim);
+  color: var(--signal-teal);
+}
+
+:focus-visible {
+  outline: 1.5px solid var(--signal-teal);
+  outline-offset: 2px;
+}
