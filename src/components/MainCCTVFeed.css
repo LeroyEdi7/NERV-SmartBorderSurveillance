@@ -1,0 +1,480 @@
+/* ── Main CCTV Feed Component ────────────────────────────────────────── */
+
+.main-cctv {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.3s ease;
+}
+
+.main-cctv--thermal {
+  filter: hue-rotate(170deg) contrast(1.2) brightness(1.1);
+}
+
+/* ── Header ── */
+.main-cctv__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--panel-raised);
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+  gap: 10px;
+}
+
+.main-cctv__cam-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.main-cctv__cam-id {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--signal-teal);
+  letter-spacing: 0.05em;
+  background: rgba(52, 217, 180, 0.1);
+  border: 1px solid rgba(52, 217, 180, 0.3);
+  padding: 2px 7px;
+  border-radius: 2px;
+}
+
+.main-cctv__cam-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-hi);
+  white-space: nowrap;
+}
+
+/* Anomaly Tag in Header */
+.main-cctv__anomaly-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: all 0.3s ease;
+}
+
+.main-cctv__anomaly-badge--high {
+  background: rgba(225, 75, 60, 0.15);
+  border: 1px solid var(--signal-red);
+  color: var(--signal-red);
+  animation: anomaly-pulse 1.5s ease-in-out infinite;
+}
+
+.main-cctv__anomaly-badge--medium {
+  background: rgba(232, 161, 61, 0.15);
+  border: 1px solid var(--signal-amber);
+  color: var(--signal-amber);
+}
+
+.main-cctv__anomaly-badge--normal {
+  background: rgba(52, 217, 180, 0.08);
+  border: 1px solid rgba(52, 217, 180, 0.25);
+  color: var(--signal-teal);
+}
+
+.main-cctv__anomaly-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.main-cctv__anomaly-text {
+  text-transform: uppercase;
+}
+
+.main-cctv__severity-tag {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 2px;
+  background: currentColor;
+  color: #0a0d0f;
+  margin-left: 2px;
+}
+
+@keyframes anomaly-pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(225, 75, 60, 0.4); }
+  50% { box-shadow: 0 0 16px rgba(225, 75, 60, 0.8); }
+}
+
+/* Controls Header */
+.main-cctv__controls-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.main-cctv__live-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--signal-red);
+  letter-spacing: 0.06em;
+  background: rgba(225, 75, 60, 0.1);
+  border: 1px solid rgba(225, 75, 60, 0.3);
+  padding: 3px 8px;
+  border-radius: 2px;
+}
+
+.main-cctv__live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--signal-red);
+  animation: live-blink 1.2s ease-in-out infinite;
+}
+
+@keyframes live-blink {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--signal-red); }
+  50% { opacity: 0.3; box-shadow: none; }
+}
+
+.main-cctv__auto-btn {
+  background: rgba(52, 217, 180, 0.08);
+  border: 1px solid var(--line-strong);
+  color: var(--text-mid);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 4px 9px;
+  border-radius: 2px;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+}
+
+.main-cctv__auto-btn--active {
+  background: rgba(52, 217, 180, 0.18);
+  border-color: var(--signal-teal);
+  color: var(--signal-teal);
+  box-shadow: 0 0 8px rgba(52, 217, 180, 0.2);
+}
+
+.main-cctv__auto-btn:hover {
+  border-color: var(--signal-teal);
+  color: var(--text-hi);
+}
+
+/* ── Viewport ── */
+.main-cctv__viewport {
+  flex: 1;
+  min-height: 0;
+  background: #07090b;
+  position: relative;
+  overflow: hidden;
+}
+
+.main-cctv__video-stream {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.main-cctv__video-sim {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, #111a21 0%, #06080a 100%);
+}
+
+/* Grid Overlay SVG */
+.main-cctv__grid-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Reticle Crosshair */
+.main-cctv__center-reticle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.main-cctv__reticle-h {
+  position: absolute;
+  top: 19px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--signal-teal);
+}
+
+.main-cctv__reticle-v {
+  position: absolute;
+  top: 0;
+  left: 19px;
+  width: 2px;
+  height: 40px;
+  background: var(--signal-teal);
+}
+
+.main-cctv__reticle-circle {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--signal-teal);
+  border-radius: 50%;
+}
+
+/* Bounding Boxes */
+.main-cctv__bbox {
+  position: absolute;
+  border: 1.5px dashed var(--signal-teal);
+  background: rgba(52, 217, 180, 0.05);
+  box-shadow: 0 0 12px rgba(52, 217, 180, 0.15);
+  transition: all 0.4s ease;
+}
+
+.main-cctv__bbox--alert {
+  border-color: var(--signal-red);
+  background: rgba(225, 75, 60, 0.08);
+  box-shadow: 0 0 16px rgba(225, 75, 60, 0.3);
+  animation: bbox-flash 1.2s ease-in-out infinite alternate;
+}
+
+.main-cctv__bbox--vehicle {
+  border-color: var(--signal-blue);
+  background: rgba(78, 159, 232, 0.06);
+  box-shadow: 0 0 12px rgba(78, 159, 232, 0.15);
+}
+
+@keyframes bbox-flash {
+  from { border-color: var(--signal-red); }
+  to { border-color: #ff7b6e; }
+}
+
+/* Corner Accents */
+.main-cctv__corner {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-color: inherit;
+}
+
+.main-cctv__corner--tl { top: -2px; left: -2px; border-top: 2.5px solid; border-left: 2.5px solid; }
+.main-cctv__corner--tr { top: -2px; right: -2px; border-top: 2.5px solid; border-right: 2.5px solid; }
+.main-cctv__corner--bl { bottom: -2px; left: -2px; border-bottom: 2.5px solid; border-left: 2.5px solid; }
+.main-cctv__corner--br { bottom: -2px; right: -2px; border-bottom: 2.5px solid; border-right: 2.5px solid; }
+
+/* Bounding Box Tag Label */
+.main-cctv__bbox-tag {
+  position: absolute;
+  top: -24px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #10161a;
+  border: 1px solid var(--signal-teal);
+  padding: 2px 6px;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  white-space: nowrap;
+}
+
+.main-cctv__bbox--alert .main-cctv__bbox-tag {
+  border-color: var(--signal-red);
+}
+
+.main-cctv__bbox-tag--vehicle {
+  border-color: var(--signal-blue);
+}
+
+.main-cctv__bbox-id {
+  font-weight: 700;
+  color: var(--text-hi);
+}
+
+.main-cctv__bbox-type {
+  color: var(--text-mid);
+}
+
+.main-cctv__bbox-score {
+  color: var(--signal-teal);
+  font-weight: 600;
+}
+
+/* Target Vector Overlay */
+.main-cctv__vector-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Floating HUD Overlays */
+.main-cctv__hud-top-left {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16, 22, 26, 0.85);
+  border: 1px solid var(--line);
+  padding: 4px 9px;
+  border-radius: 2px;
+  backdrop-filter: blur(4px);
+}
+
+.main-cctv__hud-gid-label {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+}
+
+.main-cctv__hud-gid-val {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--signal-teal);
+}
+
+.main-cctv__hud-top-right {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16, 22, 26, 0.85);
+  border: 1px solid var(--line);
+  padding: 4px 8px;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--text-mid);
+}
+
+.main-cctv__rec-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--signal-red);
+  animation: live-blink 1s ease-in-out infinite;
+}
+
+.main-cctv__hud-bottom-left {
+  position: absolute;
+  bottom: 12px;
+  left: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: rgba(16, 22, 26, 0.85);
+  border: 1px solid var(--line);
+  padding: 6px 10px;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  backdrop-filter: blur(4px);
+}
+
+.main-cctv__hud-time {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-hi);
+  letter-spacing: 0.05em;
+}
+
+.main-cctv__hud-coords {
+  font-size: 8.5px;
+  color: var(--text-dim);
+}
+
+/* Animated Scanline */
+.main-cctv__scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(52, 217, 180, 0.4), transparent);
+  animation: scanline 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes scanline {
+  0% { top: 0%; }
+  100% { top: 100%; }
+}
+
+/* ── Footer / Controls ── */
+.main-cctv__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  background: var(--panel-raised);
+  border-top: 1px solid var(--line);
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--text-mid);
+}
+
+.main-cctv__telemetry {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.main-cctv__sep {
+  opacity: 0.4;
+}
+
+.main-cctv__quick-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.main-cctv__icon-btn {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--text-mid);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.main-cctv__icon-btn:hover,
+.main-cctv__icon-btn--active {
+  border-color: var(--signal-teal);
+  color: var(--signal-teal);
+}

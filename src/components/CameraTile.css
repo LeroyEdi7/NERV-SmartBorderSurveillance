@@ -1,0 +1,222 @@
+/* ── Camera Tile Component ────────────────────────────────────────────── */
+
+.camera-tile {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  min-height: 0;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.camera-tile:hover {
+  border-color: var(--signal-teal);
+  box-shadow: 0 0 10px rgba(52, 217, 180, 0.15);
+  transform: translateY(-1px);
+}
+
+.camera-tile--active {
+  border-color: var(--signal-teal);
+  box-shadow: 0 0 12px rgba(52, 217, 180, 0.25);
+  background: var(--panel-raised);
+}
+
+.camera-tile--high {
+  border-left: 3px solid var(--signal-red);
+}
+
+.camera-tile--high.camera-tile--active {
+  border-color: var(--signal-red);
+  box-shadow: 0 0 14px rgba(225, 75, 60, 0.3);
+}
+
+/* ── Header ── */
+.camera-tile__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 8px;
+  background: var(--panel-raised);
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+
+.camera-tile__title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.camera-tile__id {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-hi);
+  letter-spacing: 0.04em;
+}
+
+.camera-tile__name {
+  font-size: 10px;
+  color: var(--text-mid);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.camera-tile__badges {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.camera-tile__active-badge {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  font-weight: 700;
+  color: #0a0d0f;
+  background: var(--signal-teal);
+  padding: 1px 5px;
+  border-radius: 2px;
+  letter-spacing: 0.05em;
+}
+
+.camera-tile__live-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--signal-teal);
+}
+
+.camera-tile__live-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--signal-teal);
+}
+
+.camera-tile--high .camera-tile__live-dot {
+  background: var(--signal-red);
+}
+
+/* ── Feed Preview ── */
+.camera-tile__feed {
+  flex: 1;
+  min-height: 0;
+  background: #080b0d;
+  position: relative;
+  overflow: hidden;
+}
+
+.camera-tile__thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.camera-tile__placeholder {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, #121b22 0%, #080b0d 100%);
+}
+
+.camera-tile__grid-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(52, 217, 180, 0.04) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(52, 217, 180, 0.04) 1px, transparent 1px);
+  background-size: 15px 15px;
+}
+
+.camera-tile__mini-bbox {
+  position: absolute;
+  border: 1px dashed var(--accent, var(--signal-teal));
+  background: rgba(52, 217, 180, 0.08);
+  border-radius: 1px;
+}
+
+.camera-tile__mini-label {
+  position: absolute;
+  top: -12px;
+  left: 0;
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  font-weight: 700;
+  color: var(--accent, var(--signal-teal));
+  background: #10161a;
+  padding: 0 3px;
+}
+
+.camera-tile__hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(16, 22, 26, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--signal-teal);
+  letter-spacing: 0.06em;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.camera-tile:hover .camera-tile__hover-overlay {
+  opacity: 1;
+}
+
+.camera-tile__scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(52, 217, 180, 0.3);
+  animation: scanline 3s linear infinite;
+  pointer-events: none;
+}
+
+/* ── Footer ── */
+.camera-tile__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px;
+  background: var(--panel-raised);
+  border-top: 1px solid var(--line);
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 9px;
+}
+
+.camera-tile__status-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.camera-tile__event-label {
+  font-weight: 600;
+}
+
+.camera-tile__clear-label {
+  color: var(--signal-teal);
+}
+
+.camera-tile__cam-fps {
+  color: var(--text-dim);
+  flex-shrink: 0;
+}

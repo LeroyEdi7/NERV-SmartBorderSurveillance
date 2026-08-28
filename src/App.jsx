@@ -1,25 +1,46 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import StatusBar   from './components/StatusBar';
-import CameraPanel  from './components/CameraPanel';
+import MainCCTVFeed from './components/MainCCTVFeed';
+import CameraTile  from './components/CameraTile';
 import TacticalMap  from './components/TacticalMap';
 import AlertsFeed   from './components/AlertsFeed';
-import GlobalTrack  from './components/GlobalTrack';
-import EventTimeline from './components/EventTimeline';
-import StatsBar     from './components/StatsBar';
+
 import ActiveAlertsPage from './components/ActiveAlertsPage';
 import AlertDetailsModal from './components/AlertDetailsModal';
+import GlobalTracksPage from './components/GlobalTracksPage';
+import GlobalTrackDetailsModal from './components/GlobalTrackDetailsModal';
 import { CAMERAS }  from './data/scenario';
 import { useEventStream } from './hooks/useEventStream';
 import './App.css';
-
-import GlobalTracksPage from './components/GlobalTracksPage';
-import GlobalTrackDetailsModal from './components/GlobalTrackDetailsModal';
 
 export default function App() {
   const { events, cameraStatus } = useEventStream();
   const [activeView, setActiveView] = useState('dashboard'); // 'dashboard' | 'alerts' | 'tracks'
   const [selectedAlert, setSelectedAlert] = useState(null);
   const [selectedTrack, setSelectedTrack] = useState(null);
+
+  // Manual camera focus state & toggle for auto-speaker view
+  const [manualCamId, setManualCamId] = useState(null);
+  const [isManualOverride, setIsManualOverride] = useState(false);
+
+  // Determine top priority / latest anomaly camera automatically (Zoom/Meet active-speaker style)
+  const autoCamId = useMemo(() => {
+    if (!events || events.length === 0) return 'BOP-01';
+    
+    // 1. Look for highest priority active event (HIGH > MEDIUM > LOW)
+    const highEvent = events.find((ev) => ev.severity === 'HIGH');
+    if (highEvent?.camera_id) return highEvent.camera_id;
+
+    const medEvent = events.find((ev) => ev.severity === 'MEDIUM');
+    if (medEvent?.camera_id) return medEvent.camera_id;
+
+    // 2. Default to newest event's camera or BOP-01
+    return events[0]?.camera_id || 'BOP-01';
+  }, [events]);
+
+  // Selected camera feed for the main display
+  const activeCamId = isManualOverride && manualCamId ? manualCamId : autoCamId;
+  const activeCamera = CAMERAS.find((c) => c.camera_id === activeCamId) || CAMERAS[0];
 
   const handleSelectIndividualAlert = (ev) => {
     const formatted = {
@@ -70,34 +91,50 @@ export default function App() {
 
   return (
     <div className="dashboard">
-      {/* ── Top status bar ── */}
+      {/* ── Top Status Bar ── */}
       <StatusBar
         cameraCount={CAMERAS.length}
         activeView={activeView}
         onNavigate={(view) => setActiveView(view)}
       />
 
-      {/* ── Main content area ── */}
+      {/* ── Main Dashboard Body ── */}
       <main className="dashboard__body">
 
-        {/* ── ROW 1: Live cameras (left) + Active alerts (right) ── */}
-        <div className="dashboard__row1">
+        {/* ── LEFT COLUMN: Main Dynamic CCTV Feed + 2 Camera Tiles ── */}
+        <div className="dashboard__left-col">
+          {/* Main Large CCTV Feed */}
+          <section className="dashboard__main-cctv-wrap">
+            <MainCCTVFeed
+              camera={activeCamera}
+              latestEvent={cameraStatus[activeCamId]}
+              isAutoSwitch={!isManualOverride}
+              onToggleAutoSwitch={() => setIsManualOverride((prev) => !prev)}
+            />
+          </section>
 
-          {/* Cameras section */}
-          <section className="dashboard__cameras-wrap">
-            <div className="dashboard__section-label">LIVE CAMERAS</div>
-            <div className="dashboard__cameras-grid">
+          {/* Exactly 2 Camera Tiles Below */}
+          <section className="dashboard__tiles-wrap">
+            <div className="dashboard__tiles-grid">
               {CAMERAS.map((cam) => (
-                <CameraPanel
+                <CameraTile
                   key={cam.camera_id}
                   camera={cam}
                   latestEvent={cameraStatus[cam.camera_id]}
+                  isActive={cam.camera_id === activeCamId}
+                  onClick={() => {
+                    setManualCamId(cam.camera_id);
+                    setIsManualOverride(true);
+                  }}
                 />
               ))}
             </div>
           </section>
+        </div>
 
-          {/* Active alerts feed */}
+        {/* ── RIGHT COLUMN: Active Alerts + Repositioned Tactical Zone Map ── */}
+        <div className="dashboard__right-col">
+          {/* Top: Active Alerts Panel */}
           <section className="dashboard__alerts-wrap">
             <AlertsFeed
               events={events}
@@ -105,33 +142,17 @@ export default function App() {
               onSelectAlert={handleSelectIndividualAlert}
             />
           </section>
-        </div>
 
-        {/* ── ROW 2: Tactical map + Global track + Event timeline ── */}
-        <div className="dashboard__row2">
-
+          {/* Bottom: Repositioned Tactical Zone Map (Exactly the same) */}
           <section className="dashboard__map-wrap">
             <TacticalMap cameraStatus={cameraStatus} />
-          </section>
-
-          <section className="dashboard__gtrack-wrap">
-            <GlobalTrack
-              events={events}
-              onViewTracks={() => setActiveView('tracks')}
-              onSelectTrack={(track) => setSelectedTrack(track)}
-            />
-          </section>
-
-          <section className="dashboard__etl-wrap">
-            <EventTimeline events={events} />
           </section>
         </div>
       </main>
 
-      {/* ── Bottom statistics bar ── */}
-      <StatsBar />
 
-      {/* Individual Alert Details Modal on Dashboard */}
+
+      {/* Individual Alert Details Modal */}
       {selectedAlert && (
         <AlertDetailsModal
           alert={selectedAlert}
@@ -145,7 +166,7 @@ export default function App() {
         />
       )}
 
-      {/* Individual Global Track Details Modal on Dashboard */}
+      {/* Individual Global Track Details Modal */}
       {selectedTrack && (
         <GlobalTrackDetailsModal
           track={selectedTrack}

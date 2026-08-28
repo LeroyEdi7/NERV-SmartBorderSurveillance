@@ -1,135 +1,122 @@
-/* ── Dashboard layout ────────────────────────────────────────────────────── */
+/* ── Redesigned Dashboard Layout ────────────────────────────────────────── */
 
 .dashboard {
   display: flex;
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
+  background: var(--void);
 }
 
-/* ── Main scrollable body ── */
+/* ── Main Body Container ── */
 .dashboard__body {
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 380px;
   gap: 10px;
-  padding: 10px 14px;
+  padding: 10px 12px;
   min-height: 0;
   overflow: hidden;
 }
 
 /* ══════════════════════════════════════════════════
-   ROW 1 — Live cameras (wide) + Active alerts
-   Ratio: ~2/3 for cameras, ~1/3 for alerts
+   LEFT COLUMN: Large Dynamic CCTV Feed + 2 Tiles Below
    ══════════════════════════════════════════════════ */
-.dashboard__row1 {
-  display: grid;
-  grid-template-columns: 1fr 340px;
+.dashboard__left-col {
+  display: flex;
+  flex-direction: column;
   gap: 10px;
-  flex: 1.15;        /* slightly taller than row 2 */
   min-height: 0;
+  flex: 1;
 }
 
-/* Cameras section wrapper */
-.dashboard__cameras-wrap {
+/* Main CCTV Feed Container */
+.dashboard__main-cctv-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.dashboard__main-cctv-wrap > * {
+  width: 100%;
+  height: 100%;
+}
+
+/* 2 Camera Tiles Wrapper */
+.dashboard__tiles-wrap {
+  flex-shrink: 0;
+  height: 128px;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  min-height: 0;
 }
 
-.dashboard__section-label {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  font-weight: 600;
-  color: var(--text-mid);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  flex-shrink: 0;
-}
-
-/* Camera grid: 2 panels side by side */
-.dashboard__cameras-grid {
+.dashboard__tiles-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
-  flex: 1;
+  height: 100%;
+}
+
+.dashboard__tiles-grid > * {
   min-height: 0;
 }
 
-/* Each camera panel fills its cell */
-.dashboard__cameras-grid > * {
+/* ══════════════════════════════════════════════════
+   RIGHT COLUMN: Active Alerts + Repositioned Tactical Zone Map
+   ══════════════════════════════════════════════════ */
+.dashboard__right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   min-height: 0;
 }
 
-/* Alerts column */
+/* Active Alerts Panel Wrapper */
 .dashboard__alerts-wrap {
+  flex: 1.1;
   min-height: 0;
   display: flex;
 }
 
 .dashboard__alerts-wrap > * {
   width: 100%;
-  min-height: 0;
+  height: 100%;
 }
 
-/* ══════════════════════════════════════════════════
-   ROW 2 — Tactical map | Global track | Event timeline
-   Equal-ish thirds: map is slightly wider
-   ══════════════════════════════════════════════════ */
-.dashboard__row2 {
-  display: grid;
-  grid-template-columns: 1.05fr 0.75fr 1fr;
-  gap: 10px;
-  flex: 1;
-  min-height: 0;
-}
-
-.dashboard__map-wrap,
-.dashboard__gtrack-wrap,
-.dashboard__etl-wrap {
+/* Repositioned Tactical Zone Map Wrapper */
+.dashboard__map-wrap {
+  flex: 0.9;
   min-height: 0;
   display: flex;
 }
 
-.dashboard__map-wrap > *,
-.dashboard__gtrack-wrap > *,
-.dashboard__etl-wrap > * {
+.dashboard__map-wrap > * {
   width: 100%;
-  min-height: 0;
-}
-
-/* ══════════════════════════════════════════════════
-   Camera panel: fill its grid cell height
-   ══════════════════════════════════════════════════ */
-.camera-panel {
   height: 100%;
-  min-height: 0;
-}
-
-.camera-panel__feed {
-  flex: 1;
-  min-height: 0;
-  height: auto !important;  /* override fixed 130px so it fills */
 }
 
 /* ══════════════════════════════════════════════════
-   Responsive collapse
+   Responsive Layout Adjustment
    ══════════════════════════════════════════════════ */
 @media (max-width: 1100px) {
-  .dashboard__row1 {
+  .dashboard__body {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
+    overflow-y: auto;
   }
-  .dashboard__row2 {
-    grid-template-columns: 1fr 1fr;
+
+  .dashboard__left-col {
+    min-height: 500px;
   }
-  .dashboard__etl-wrap {
-    grid-column: 1 / -1;
+
+  .dashboard__right-col {
+    min-height: 600px;
   }
 }
 
-@media (max-width: 800px) {
-  .dashboard__cameras-grid { grid-template-columns: 1fr; }
-  .dashboard__row2         { grid-template-columns: 1fr; }
+@media (max-width: 700px) {
+  .dashboard__tiles-grid {
+    grid-template-columns: 1fr;
+    height: 240px;
+  }
 }
