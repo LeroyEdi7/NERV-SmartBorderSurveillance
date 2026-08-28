@@ -29,7 +29,7 @@ export default function CameraTile({ camera, latestEvent, isActive, onClick, str
         </div>
 
         <div className="camera-tile__badges">
-          {isActive && <span className="camera-tile__active-badge">★ MAIN FEED</span>}
+          {isActive && <span className="camera-tile__active-badge">MAIN FEED</span>}
           <span className="camera-tile__live-badge">
             <span className="camera-tile__live-dot" />
             LIVE
@@ -72,12 +72,15 @@ export default function CameraTile({ camera, latestEvent, isActive, onClick, str
       <div className="camera-tile__foot">
         <span className="camera-tile__status-text">
           {latestEvent ? (
-            <span className="camera-tile__event-label" style={{ color: accentColor }}>
-              {severity === 'HIGH' ? '🔴 ' : severity === 'MEDIUM' ? '🟡 ' : '🟢 '}
+            <span className="camera-tile__event-label" style={{ color: accentColor, display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+              <span className="camera-tile__live-dot" style={{ background: accentColor, width: '6px', height: '6px' }} />
               {latestEvent.label}
             </span>
           ) : (
-            <span className="camera-tile__clear-label">🟢 NORMAL - CLEAR</span>
+            <span className="camera-tile__clear-label" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+              <span className="camera-tile__live-dot" style={{ background: 'var(--signal-teal)', width: '6px', height: '6px' }} />
+              NORMAL - CLEAR
+            </span>
           )}
         </span>
         <span className="camera-tile__cam-fps">1080p • 30 FPS</span>

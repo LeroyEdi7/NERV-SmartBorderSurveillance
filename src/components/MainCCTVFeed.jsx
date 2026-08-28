@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Zap, Target, Flame, Volume2, Maximize2, Grid } from 'lucide-react';
 import './MainCCTVFeed.css';
 import { SEVERITY_COLOR } from '../data/scenario';
 
@@ -66,7 +67,15 @@ export default function MainCCTVFeed({
             onClick={onToggleAutoSwitch}
             title={isAutoSwitch ? 'Auto-switching enabled (Speaker View)' : 'Click to resume Auto-Switch'}
           >
-            {isAutoSwitch ? '⚡ AUTO FOCUS' : '🎯 MANUAL OVERRIDE'}
+            {isAutoSwitch ? (
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                <Zap size={11} /> AUTO FOCUS
+              </span>
+            ) : (
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                <Target size={11} /> MANUAL OVERRIDE
+              </span>
+            )}
           </button>
         </div>
       </div>
@@ -199,17 +208,21 @@ export default function MainCCTVFeed({
             onClick={() => setGridVisible(!gridVisible)}
             title="Toggle Tactical Grid"
           >
-            ⊞ Grid
+            <Grid size={11} style={{ display: 'inline', marginRight: '4px' }} /> Grid
           </button>
           <button
             className={`main-cctv__icon-btn ${thermalMode ? 'main-cctv__icon-btn--active' : ''}`}
             onClick={() => setThermalMode(!thermalMode)}
             title="Toggle Thermal Filter"
           >
-            🔥 Thermal
+            <Flame size={11} style={{ display: 'inline', marginRight: '4px' }} /> Thermal
           </button>
-          <span className="main-cctv__icon-btn" title="Audio Stream">🔊</span>
-          <span className="main-cctv__icon-btn" title="Fullscreen View">⛶</span>
+          <span className="main-cctv__icon-btn" title="Audio Stream">
+            <Volume2 size={12} />
+          </span>
+          <span className="main-cctv__icon-btn" title="Fullscreen View">
+            <Maximize2 size={12} />
+          </span>
         </div>
       </div>
     </div>

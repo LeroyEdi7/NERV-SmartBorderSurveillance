@@ -21,7 +21,7 @@ export const INITIAL_TRACKS = [
       confidence: '94.2%'
     },
     event_count: 6,
-    avatar: { bg: '#e14b3c', icon: '👤' },
+    avatar: { bg: '#e14b3c', icon: 'user' },
     camera_journey: [
       { camera_id: 'BOP-01', name: 'Border outpost camera 01', time: '20:31:00', action: 'Target First Detected' },
       { camera_id: 'BOP-01', name: 'Border outpost camera 01', time: '20:32:15', action: 'Perimeter Intrusion Alert' },
@@ -64,7 +64,7 @@ export const INITIAL_TRACKS = [
       confidence: '91.8%'
     },
     event_count: 5,
-    avatar: { bg: '#e14b3c', icon: '👤' },
+    avatar: { bg: '#e14b3c', icon: 'user' },
     camera_journey: [
       { camera_id: 'GATE-WEST', name: 'West Outer Gate', time: '20:10:00', action: 'Entry Attempt' },
       { camera_id: 'PERIMETER-03', name: 'Perimeter Sensor Cam 03', time: '20:15:20', action: 'Fence Crossing' },
@@ -99,7 +99,7 @@ export const INITIAL_TRACKS = [
       confidence: '92.0%'
     },
     event_count: 4,
-    avatar: { bg: '#e8a13d', icon: '👤' },
+    avatar: { bg: '#e8a13d', icon: 'user' },
     camera_journey: [
       { camera_id: 'CHECK-01', name: 'Checkpost camera 01', time: '19:40:00', action: 'Cargo Bay Arrival' },
       { camera_id: 'CHECK-01', name: 'Checkpost camera 01', time: '20:05:12', action: 'Loitering Threshold Trigger' }
@@ -126,7 +126,7 @@ export const INITIAL_TRACKS = [
     watchlist_status: 'Flagged Visitor',
     vehicle: null,
     event_count: 3,
-    avatar: { bg: '#e8a13d', icon: '👤' },
+    avatar: { bg: '#e8a13d', icon: 'user' },
     camera_journey: [
       { camera_id: 'GATE-NORTH', name: 'North Gate Entrance', time: '20:00:00', action: 'Turnstile Scan' },
       { camera_id: 'GATE-NORTH', name: 'North Gate Entrance', time: '20:15:30', action: 'Screening Station' }
@@ -158,7 +158,7 @@ export const INITIAL_TRACKS = [
       confidence: '98.0%'
     },
     event_count: 4,
-    avatar: { bg: '#34d9b4', icon: '👤' },
+    avatar: { bg: '#34d9b4', icon: 'user' },
     camera_journey: [
       { camera_id: 'GATE-SOUTH', name: 'South Gate Entry', time: '19:00:00', action: 'Badge Scan' },
       { camera_id: 'SUBSTATION-01', name: 'Solar Substation 01', time: '19:35:10', action: 'Work Completed' }
@@ -190,7 +190,7 @@ export const INITIAL_TRACKS = [
       confidence: '96.5%'
     },
     event_count: 7,
-    avatar: { bg: '#e14b3c', icon: '👤' },
+    avatar: { bg: '#e14b3c', icon: 'user' },
     camera_journey: [
       { camera_id: 'PERIMETER-02', name: 'Perimeter Sensor Cam 02', time: '20:12:00', action: 'Movement Detected' },
       { camera_id: 'BOP-01', name: 'Border outpost camera 01', time: '20:25:00', action: 'Vehicle Association MH02EF4321' },

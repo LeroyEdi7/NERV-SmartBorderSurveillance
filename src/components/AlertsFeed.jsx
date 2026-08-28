@@ -1,12 +1,13 @@
+import { Footprints, AlertTriangle, UserX, Car, Link } from 'lucide-react';
 import './AlertsFeed.css';
 import { SEVERITY_COLOR } from '../data/scenario';
 
 const EVENT_ICONS = {
-  person_detected:            { icon: '🏃', bg: '#34d9b4' },
-  intrusion:                  { icon: '⚠',  bg: '#e14b3c' },
-  watchlist_match:            { icon: '👤', bg: '#e8a13d' },
-  vehicle_person_association: { icon: '🚗', bg: '#4e9fe8' },
-  cross_camera_match:         { icon: '🔗', bg: '#a87ce8' },
+  person_detected:            { icon: <Footprints size={12} />, bg: '#34d9b4' },
+  intrusion:                  { icon: <AlertTriangle size={12} />,  bg: '#e14b3c' },
+  watchlist_match:            { icon: <UserX size={12} />, bg: '#e8a13d' },
+  vehicle_person_association: { icon: <Car size={12} />, bg: '#4e9fe8' },
+  cross_camera_match:         { icon: <Link size={12} />, bg: '#a87ce8' },
 };
 
 const SEVERITY_LABEL = { HIGH: 'HIGH', MEDIUM: 'MEDIUM', LOW: 'LOW', INFO: 'INFO' };

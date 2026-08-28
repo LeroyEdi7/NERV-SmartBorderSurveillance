@@ -1,3 +1,4 @@
+import { Camera, Mic, Volume2, Maximize2 } from 'lucide-react';
 import './CameraPanel.css';
 import { SEVERITY_COLOR } from '../data/scenario';
 
@@ -58,7 +59,10 @@ export default function CameraPanel({ camera, latestEvent, streamUrl }) {
       <div className="camera-panel__foot">
         <span>Resolution: 1080p &nbsp;•&nbsp; FPS: 20 &nbsp;•&nbsp; AI: <span style={{color:'var(--signal-teal)'}}>Active</span></span>
         <div className="camera-panel__foot-icons" aria-hidden="true">
-          <span>📷</span><span>🎙</span><span>🔊</span><span>⛶</span>
+          <span><Camera size={12} /></span>
+          <span><Mic size={12} /></span>
+          <span><Volume2 size={12} /></span>
+          <span><Maximize2 size={12} /></span>
         </div>
       </div>
     </div>

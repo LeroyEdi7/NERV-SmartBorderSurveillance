@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Search, Camera, X } from 'lucide-react';
 import './TacticalSnapshot.css';
 
 export default function TacticalSnapshot({
@@ -106,7 +107,9 @@ export default function TacticalSnapshot({
         title="Click to expand camera snapshot"
       >
         {renderSvgCanvas()}
-        <span className="tactical-snapshot__zoom-hint">🔍 Zoom</span>
+        <span className="tactical-snapshot__zoom-hint">
+          <Search size={9} style={{ display: 'inline', marginRight: '3px' }} /> Zoom
+        </span>
         <span className="tactical-snapshot__tag">{cameraId}</span>
       </div>
 
@@ -115,8 +118,8 @@ export default function TacticalSnapshot({
         <div className="snapshot-lightbox-backdrop" onClick={() => setShowLightbox(false)}>
           <div className="snapshot-lightbox" onClick={(e) => e.stopPropagation()}>
             <div className="snapshot-lightbox__head">
-              <div>
-                📸 CAMERA FRAME SNAPSHOT CAPTURE • <span style={{ color: 'var(--signal-teal)' }}>{cameraId}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <Camera size={13} /> CAMERA FRAME SNAPSHOT CAPTURE • <span style={{ color: 'var(--signal-teal)' }}>{cameraId}</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <span style={{ color: 'var(--text-dim)' }}>[{timestamp}]</span>
@@ -125,7 +128,7 @@ export default function TacticalSnapshot({
                   onClick={() => setShowLightbox(false)}
                   aria-label="Close image preview"
                 >
-                  ✕
+                  <X size={14} />
                 </button>
               </div>
             </div>

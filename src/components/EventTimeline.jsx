@@ -1,3 +1,4 @@
+import { Footprints, AlertTriangle, UserX, Car, Link } from 'lucide-react';
 import './EventTimeline.css';
 import { SEVERITY_COLOR } from '../data/scenario';
 
@@ -5,11 +6,11 @@ import { SEVERITY_COLOR } from '../data/scenario';
 function EventIcon({ type, severity }) {
   const color = SEVERITY_COLOR[severity] ?? 'var(--text-dim)';
   const icons = {
-    person_detected:         '🏃',
-    intrusion:               '⚠',
-    watchlist_match:         '👤',
-    vehicle_person_association: '🚗',
-    cross_camera_match:      '🔗',
+    person_detected:            <Footprints size={11} />,
+    intrusion:                  <AlertTriangle size={11} />,
+    watchlist_match:            <UserX size={11} />,
+    vehicle_person_association: <Car size={11} />,
+    cross_camera_match:         <Link size={11} />,
   };
   return (
     <span className="etl__icon" style={{ '--c': color }}>

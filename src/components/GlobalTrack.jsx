@@ -1,3 +1,4 @@
+import { Camera, Clock } from 'lucide-react';
 import './GlobalTrack.css';
 import { INITIAL_TRACKS } from '../data/mockTracks';
 import TacticalSnapshot from './TacticalSnapshot';
@@ -60,9 +61,15 @@ export default function GlobalTrack({ onViewTracks, onSelectTrack }) {
 
                   {/* Bottom: Camera & Time */}
                   <div className="gtrack__item-meta">
-                    <span className="gtrack__item-cam">📷 {tr.last_camera}</span>
+                    <span className="gtrack__item-cam">
+                      <Camera size={10} style={{ display: 'inline', marginRight: '3px' }} />
+                      {tr.last_camera}
+                    </span>
                     <span className="gtrack__item-sep">•</span>
-                    <span className="gtrack__item-time">🕒 {tr.last_time}</span>
+                    <span className="gtrack__item-time">
+                      <Clock size={10} style={{ display: 'inline', marginRight: '3px' }} />
+                      {tr.last_time}
+                    </span>
                   </div>
                 </div>
               </div>

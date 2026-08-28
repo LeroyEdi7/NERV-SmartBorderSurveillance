@@ -357,9 +357,9 @@ export const SEVERITY_COLORS = {
 };
 
 export const EVENT_META = {
-  intrusion: { icon: '⚠', bg: '#e14b3c', color: '#e14b3c' },
-  watchlist_match: { icon: '👤', bg: '#e8a13d', color: '#e8a13d' },
-  vehicle_person_association: { icon: '🚗', bg: '#4e9fe8', color: '#4e9fe8' },
-  cross_camera_match: { icon: '🔗', bg: '#a87ce8', color: '#a87ce8' },
-  person_reidentified: { icon: '🏃', bg: '#34d9b4', color: '#34d9b4' },
+  intrusion: { type: 'intrusion', bg: '#e14b3c', color: '#e14b3c' },
+  watchlist_match: { type: 'watchlist_match', bg: '#e8a13d', color: '#e8a13d' },
+  vehicle_person_association: { type: 'vehicle_person_association', bg: '#4e9fe8', color: '#4e9fe8' },
+  cross_camera_match: { type: 'cross_camera_match', bg: '#a87ce8', color: '#a87ce8' },
+  person_reidentified: { type: 'person_reidentified', bg: '#34d9b4', color: '#34d9b4' },
 };

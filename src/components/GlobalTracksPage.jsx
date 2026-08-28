@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react';
+import { Search, AlertTriangle, User, Car, Zap } from 'lucide-react';
 import './GlobalTracksPage.css';
 import { INITIAL_TRACKS } from '../data/mockTracks';
 import GlobalTrackDetailsModal from './GlobalTrackDetailsModal';
-
 import TacticalSnapshot from './TacticalSnapshot';
 
 export default function GlobalTracksPage({ onBackToDashboard }) {
@@ -98,7 +98,9 @@ export default function GlobalTracksPage({ onBackToDashboard }) {
           <div className="alerts-page__filters-left">
             {/* Search Input */}
             <div className="alerts-page__search-wrap">
-              <span className="alerts-page__search-icon">🔍</span>
+              <span className="alerts-page__search-icon">
+                <Search size={14} />
+              </span>
               <input
                 type="text"
                 className="alerts-page__search-input"
@@ -162,7 +164,9 @@ export default function GlobalTracksPage({ onBackToDashboard }) {
         <section className="tracks-page__grid">
           {filteredTracks.length === 0 ? (
             <div className="alerts-page__empty" style={{ gridColumn: '1 / -1' }}>
-              <span>⚠ No target tracks found matching the search criteria.</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <AlertTriangle size={14} /> No target tracks found matching the search criteria.
+              </span>
               {hasActiveFilters && (
                 <button className="alerts-page__filter-btn" onClick={resetFilters}>
                   Reset Filters
@@ -184,7 +188,7 @@ export default function GlobalTracksPage({ onBackToDashboard }) {
                   <div className="track-card__top">
                     <div className="track-card__avatar-cluster">
                       <div className="track-card__avatar" style={{ borderColor: severityColor }}>
-                        {tr.avatar?.icon || '👤'}
+                        <User size={14} />
                       </div>
                       <div>
                         <div className="track-card__id">{tr.id}</div>
@@ -239,7 +243,9 @@ export default function GlobalTracksPage({ onBackToDashboard }) {
                     <div className="track-card__info-row">
                       <span className="track-card__key">Vehicle:</span>
                       <span className="track-card__val track-card__val--vehicle">
-                        {tr.vehicle ? `🚗 ${tr.vehicle.plate}` : 'None'}
+                        {tr.vehicle ? (
+                          <span><Car size={11} style={{ display: 'inline', marginRight: '3px' }} /> {tr.vehicle.plate}</span>
+                        ) : 'None'}
                       </span>
                     </div>
                     <div className="track-card__info-row">
@@ -253,7 +259,7 @@ export default function GlobalTracksPage({ onBackToDashboard }) {
                   {/* Card Footer / Action */}
                   <div className="track-card__footer">
                     <span className="track-card__event-badge">
-                      ⚡ {tr.event_count} Logged Events
+                      <Zap size={11} style={{ display: 'inline', marginRight: '3px' }} /> {tr.event_count} Logged Events
                     </span>
                     <button className="alert-card__btn" onClick={(e) => {
                       e.stopPropagation();

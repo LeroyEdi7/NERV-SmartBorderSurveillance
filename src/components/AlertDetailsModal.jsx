@@ -1,6 +1,18 @@
 import { useState } from 'react';
+import { AlertTriangle, UserX, Car, Link, Footprints, Check, ShieldCheck, X } from 'lucide-react';
 import './AlertDetailsModal.css';
 import { SEVERITY_COLORS, EVENT_META } from '../data/mockAlerts';
+
+function RenderModalTypeIcon({ eventType }) {
+  switch (eventType) {
+    case 'intrusion': return <AlertTriangle size={16} />;
+    case 'watchlist_match': return <UserX size={16} />;
+    case 'vehicle_person_association': return <Car size={16} />;
+    case 'cross_camera_match': return <Link size={16} />;
+    case 'person_reidentified': return <Footprints size={16} />;
+    default: return <AlertTriangle size={16} />;
+  }
+}
 
 export default function AlertDetailsModal({ alert, onClose, onAcknowledge, onResolve }) {
   const [noteText, setNoteText] = useState('');
@@ -8,7 +20,7 @@ export default function AlertDetailsModal({ alert, onClose, onAcknowledge, onRes
 
   if (!alert) return null;
 
-  const meta = EVENT_META[alert.event_type] ?? { icon: '●', bg: '#52666d', color: '#8fa3aa' };
+  const meta = EVENT_META[alert.event_type] ?? { bg: '#52666d', color: '#8fa3aa' };
   const severityColor = SEVERITY_COLORS[alert.severity] ?? '#8fa3aa';
 
   const handleAddNote = (e) => {
@@ -31,7 +43,7 @@ export default function AlertDetailsModal({ alert, onClose, onAcknowledge, onRes
         <div className="alert-modal__header">
           <div className="alert-modal__header-left">
             <div className="alert-modal__type-icon" style={{ background: meta.bg }}>
-              {meta.icon}
+              <RenderModalTypeIcon eventType={alert.event_type} />
             </div>
             <div>
               <h2 className="alert-modal__title">{alert.type_label || alert.label}</h2>
@@ -59,7 +71,7 @@ export default function AlertDetailsModal({ alert, onClose, onAcknowledge, onRes
             onClick={onClose}
             aria-label="Close modal"
           >
-            ✕
+            <X size={14} />
           </button>
         </div>
 
@@ -221,7 +233,7 @@ export default function AlertDetailsModal({ alert, onClose, onAcknowledge, onRes
                 className="btn-tactical btn-tactical--ack"
                 onClick={() => onAcknowledge(alert.id)}
               >
-                ✓ Acknowledge Alert
+                <Check size={12} style={{ display: 'inline', marginRight: '4px' }} /> Acknowledge Alert
               </button>
             )}
 
@@ -230,7 +242,7 @@ export default function AlertDetailsModal({ alert, onClose, onAcknowledge, onRes
                 className="btn-tactical btn-tactical--resolve"
                 onClick={() => onResolve(alert.id)}
               >
-                🛡 Resolve Alert
+                <ShieldCheck size={12} style={{ display: 'inline', marginRight: '4px' }} /> Resolve Alert
               </button>
             )}
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Moon, User, ChevronDown } from 'lucide-react';
 import './StatusBar.css';
 
 export default function StatusBar({ cameraCount, activeView = 'dashboard', onNavigate }) {
@@ -59,14 +60,20 @@ export default function StatusBar({ cameraCount, activeView = 'dashboard', onNav
 
       {/* Right: theme toggle + operator */}
       <div className="status-bar__right">
-        <button className="status-bar__icon-btn" aria-label="Toggle theme">🌙</button>
+        <button className="status-bar__icon-btn" aria-label="Toggle theme">
+          <Moon size={13} />
+        </button>
         <div className="status-bar__operator">
-          <span className="status-bar__avatar" aria-hidden="true">👤</span>
+          <span className="status-bar__avatar" aria-hidden="true">
+            <User size={13} />
+          </span>
           <div className="status-bar__operator-info">
             <span className="status-bar__operator-name">Operator</span>
             <span className="status-bar__operator-role">Admin</span>
           </div>
-          <span className="status-bar__chevron" aria-hidden="true">▾</span>
+          <span className="status-bar__chevron" aria-hidden="true">
+            <ChevronDown size={12} />
+          </span>
         </div>
       </div>
     </header>

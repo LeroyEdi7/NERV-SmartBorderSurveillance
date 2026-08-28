@@ -1,7 +1,19 @@
 import { useState, useMemo } from 'react';
+import { Search, AlertTriangle, Check, ShieldCheck, Footprints, UserX, Car, Link } from 'lucide-react';
 import './ActiveAlertsPage.css';
 import { INITIAL_ALERTS, SEVERITY_COLORS, EVENT_META } from '../data/mockAlerts';
 import AlertDetailsModal from './AlertDetailsModal';
+
+function RenderAlertIcon({ eventType }) {
+  switch (eventType) {
+    case 'intrusion': return <AlertTriangle size={12} />;
+    case 'watchlist_match': return <UserX size={12} />;
+    case 'vehicle_person_association': return <Car size={12} />;
+    case 'cross_camera_match': return <Link size={12} />;
+    case 'person_reidentified': return <Footprints size={12} />;
+    default: return <AlertTriangle size={12} />;
+  }
+}
 
 export default function ActiveAlertsPage({ onBackToDashboard, liveEvents = [] }) {
   // State for alerts (merge live streaming events + comprehensive initial alerts)
@@ -220,7 +232,9 @@ export default function ActiveAlertsPage({ onBackToDashboard, liveEvents = [] })
           <div className="alerts-page__filters-left">
             {/* Search Input */}
             <div className="alerts-page__search-wrap">
-              <span className="alerts-page__search-icon">🔍</span>
+              <span className="alerts-page__search-icon">
+                <Search size={14} />
+              </span>
               <input
                 type="text"
                 className="alerts-page__search-input"
@@ -314,7 +328,9 @@ export default function ActiveAlertsPage({ onBackToDashboard, liveEvents = [] })
         <section className="alerts-page__list-wrap">
           {paginatedAlerts.length === 0 ? (
             <div className="alerts-page__empty">
-              <span>⚠ No alerts match the selected filter criteria.</span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <AlertTriangle size={14} /> No alerts match the selected filter criteria.
+              </span>
               {hasActiveFilters && (
                 <button className="alerts-page__filter-btn" onClick={resetFilters}>
                   Reset All Filters
@@ -323,7 +339,7 @@ export default function ActiveAlertsPage({ onBackToDashboard, liveEvents = [] })
             </div>
           ) : (
             paginatedAlerts.map((item) => {
-              const meta = EVENT_META[item.event_type] ?? { icon: '●', bg: '#52666d', color: '#8fa3aa' };
+              const meta = EVENT_META[item.event_type] ?? { bg: '#52666d', color: '#8fa3aa' };
               const severityColor = SEVERITY_COLORS[item.severity] ?? '#8fa3aa';
 
               return (
@@ -362,7 +378,7 @@ export default function ActiveAlertsPage({ onBackToDashboard, liveEvents = [] })
                       </span>
 
                       <span className="alert-card__type-label">
-                        <span>{meta.icon}</span>
+                        <span><RenderAlertIcon eventType={item.event_type} /></span>
                         <span>{item.type_label}</span>
                       </span>
 
@@ -412,7 +428,7 @@ export default function ActiveAlertsPage({ onBackToDashboard, liveEvents = [] })
                         className="alert-card__btn alert-card__btn--ack"
                         onClick={() => handleAcknowledge(item.id)}
                       >
-                        ✓ Acknowledge
+                        <Check size={11} style={{ display: 'inline', marginRight: '3px' }} /> Acknowledge
                       </button>
                     )}
 
@@ -421,7 +437,7 @@ export default function ActiveAlertsPage({ onBackToDashboard, liveEvents = [] })
                         className="alert-card__btn alert-card__btn--resolve"
                         onClick={() => handleResolve(item.id)}
                       >
-                        🛡 Resolve
+                        <ShieldCheck size={11} style={{ display: 'inline', marginRight: '3px' }} /> Resolve
                       </button>
                     )}
                   </div>

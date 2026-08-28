@@ -1,30 +1,31 @@
+import { AlertTriangle, Car, Footprints, ShieldCheck } from 'lucide-react';
 import './StatsBar.css';
 
 const STATS = [
   {
     id:    'high-alerts',
-    icon:  '🔴',
+    icon:  <AlertTriangle size={16} />,
     label: 'High Alerts',
     value: 6,
     color: '#e14b3c',
   },
   {
     id:    'vehicles',
-    icon:  '🚗',
+    icon:  <Car size={16} />,
     label: 'Vehicles Detected',
     value: 42,
     color: '#4e9fe8',
   },
   {
     id:    'people',
-    icon:  '🏃',
+    icon:  <Footprints size={16} />,
     label: 'People Detected',
     value: 89,
     color: '#34d9b4',
   },
   {
     id:    'uptime',
-    icon:  '🛡',
+    icon:  <ShieldCheck size={16} />,
     label: 'System Uptime',
     value: '99.8%',
     color: '#34d9b4',

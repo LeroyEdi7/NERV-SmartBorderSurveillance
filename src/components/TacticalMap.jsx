@@ -352,7 +352,7 @@ export default function TacticalMap({ cameraStatus }) {
         </span>
         <span className="tmap__legend-item tmap__legend-g017" style={{ color: insideZone ? '#e14b3c' : '#34d9b4' }}>
           <span className="tmap__legend-dot" style={{ background: insideZone ? '#e14b3c' : '#34d9b4' }}/>
-          G-017{insideZone ? ' ⚠ IN ZONE' : ''}
+          G-017{insideZone ? ' [IN RESTRICTED ZONE]' : ''}
         </span>
       </div>
     </div>

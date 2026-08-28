@@ -1,3 +1,4 @@
+import { User, Car, X } from 'lucide-react';
 import TacticalSnapshot from './TacticalSnapshot';
 import './GlobalTrackDetailsModal.css';
 
@@ -13,7 +14,7 @@ export default function GlobalTrackDetailsModal({ track, onClose }) {
         <div className="track-modal__header">
           <div className="track-modal__header-left">
             <div className="track-modal__avatar-wrap" style={{ borderColor: severityColor }}>
-              {track.avatar?.icon || '👤'}
+              <User size={16} />
             </div>
             <div>
               <h2 className="track-modal__title">
@@ -40,7 +41,7 @@ export default function GlobalTrackDetailsModal({ track, onClose }) {
               {track.status}
             </span>
             <button className="track-modal__close-btn" onClick={onClose} aria-label="Close modal">
-              ✕
+              <X size={14} />
             </button>
           </div>
         </div>
@@ -160,7 +161,9 @@ export default function GlobalTrackDetailsModal({ track, onClose }) {
             {track.vehicle ? (
               <div className="track-modal__vehicle-box">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                  <span className="track-modal__vehicle-icon">🚗</span>
+                  <span className="track-modal__vehicle-icon">
+                    <Car size={14} />
+                  </span>
                   <div>
                     <div className="track-modal__vehicle-plate">{track.vehicle.plate}</div>
                     <div className="track-modal__vehicle-type">{track.vehicle.type}</div>
