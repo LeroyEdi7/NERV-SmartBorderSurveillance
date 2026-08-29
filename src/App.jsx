@@ -110,6 +110,7 @@ export default function App() {
               latestEvent={cameraStatus[activeCamId]}
               isAutoSwitch={!isManualOverride}
               onToggleAutoSwitch={() => setIsManualOverride((prev) => !prev)}
+              streamUrl={activeCamera.streamUrl}
             />
           </section>
 
@@ -126,6 +127,7 @@ export default function App() {
                     setManualCamId(cam.camera_id);
                     setIsManualOverride(true);
                   }}
+                  streamUrl={cam.streamUrl}
                 />
               ))}
             </div>

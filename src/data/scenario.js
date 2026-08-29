@@ -9,6 +9,7 @@ export const CAMERAS = [
     location: 'BOP-01',
     lat: 28.6139,
     lng: 77.209,
+    streamUrl: 'http://192.168.1.3:8080/video',
   },
   {
     camera_id: 'CHECK-01',
@@ -16,6 +17,7 @@ export const CAMERAS = [
     location: 'CHECK-01',
     lat: 28.6205,
     lng: 77.2165,
+    streamUrl: 'http://192.168.1.4:8080/video',
   },
 ];
 
