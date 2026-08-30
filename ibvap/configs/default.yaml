@@ -1,0 +1,44 @@
+# Tracking loop
+fps: 25.0
+high_thresh: 0.6
+low_thresh: 0.1
+match_iou: 0.5
+max_age: 30
+min_hits: 3
+
+# Occlusion recovery (seconds). Clocks on every camera must be NTP-synced
+# before cross-camera time windows are trustworthy.
+occlusion_ttl_sec: 8.0
+reid_cosine_threshold: 0.7
+embedding_buffer_size: 5
+lost_track_distance_gate_px: 180.0
+lost_track_iou_gate: 0.1
+
+# Person-vehicle association
+overlap_threshold: 0.6
+min_duration_sec: 1.5
+confirm_on_disappear: true
+disappear_confirm_sec: 2.0
+spatial_grid_cell_px: 160
+
+# Cross-camera handoff
+exit_margin_px: 24
+gallery_ambiguity_gap: 0.05
+# Privacy / retention: embeddings and exit gallery entries expire after this TTL.
+# Raise with the team before increasing; this is identifiable appearance data.
+embedding_retention_sec: 30.0
+
+# ReID: auto tries osnet -> deepsort -> histogram
+embedder: auto
+osnet_name: osnet_x1_0
+device: cpu
+
+# Backend (Person 4). Leave empty to log-only + local retry queue.
+backend_url: ""
+backend_timeout_sec: 3.0
+retry_backoff_sec: 0.5
+max_retries: 5
+queue_path: event_queue.jsonl
+
+yolo_model: yolov8n.pt
+draw: true

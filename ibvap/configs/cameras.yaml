@@ -1,0 +1,14 @@
+# Camera topology. expected_transit_sec is one-way travel time between adjacent
+# cameras; margin_sec is the allowed window around that estimate.
+# Timestamps must come from NTP-synced clocks (fail closed: new track_id).
+cameras:
+  cam1:
+    adjacent:
+      cam2:
+        expected_transit_sec: 5.0
+        margin_sec: 3.0
+  cam2:
+    adjacent:
+      cam1:
+        expected_transit_sec: 5.0
+        margin_sec: 3.0
